@@ -5,8 +5,8 @@ if(!defined('DB_SERVER')){
 class DBConnection{
 
     private $host = "localhost";
-    private $username = "root";
-    private $password = "";
+    private $username = "shopuser";
+    private $password = "admin123";
     private $database = "sms_db";
     
     public $conn;
