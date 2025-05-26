@@ -1,5 +1,5 @@
 # shop-management-system
-Shop Management System is a custom-built web application developed in Core PHP designed to help small to medium businesses manage their shop operations efficiently. It provides functionalities to manage inventory, sales, clients, orders, and user sessions through an easy-to-use admin interface.
+Shop Management System is a custom-built web application designed to help small to medium businesses manage their shop operations efficiently. It provides functionalities to manage inventory, sales, clients, orders, and user sessions through an easy-to-use admin interface.
 Features
 
     Inventory management (stock tracking, purchases, sales)
@@ -14,7 +14,7 @@ Features
 
 **Technology Stack**
 
-    Core PHP 
+    PHP,Javascript,Css
 
     MySQL for database
 
