@@ -524,6 +524,44 @@ Class Master extends DBConnection {
 			$_POST['sales_code'] = $prefix."-".$code;
 		}
 		extract($_POST);
+		
+		// Validate stock availability before processing sale
+		if(isset($item_id) && is_array($item_id)){
+			// If editing existing sale, get current sale quantities to add back to available stock
+			$current_sale_quantities = array();
+			if(!empty($id)){
+				$current_sale = $this->conn->query("SELECT stock_ids FROM `sales_list` where id = '{$id}'");
+				if($current_sale->num_rows > 0){
+					$sale_data = $current_sale->fetch_array();
+					if(!empty($sale_data['stock_ids'])){
+						$current_stocks = $this->conn->query("SELECT item_id, quantity FROM `stock_list` where id in ({$sale_data['stock_ids']})");
+						while($stock_row = $current_stocks->fetch_assoc()){
+							if(!isset($current_sale_quantities[$stock_row['item_id']])){
+								$current_sale_quantities[$stock_row['item_id']] = 0;
+							}
+							$current_sale_quantities[$stock_row['item_id']] += $stock_row['quantity'];
+						}
+					}
+				}
+			}
+			
+			foreach($item_id as $k => $v){
+				$requested_qty = $qty[$k];
+				$current_stock = $this->get_current_stock($v);
+				
+				// If editing, add back the current sale quantities
+				if(!empty($id) && isset($current_sale_quantities[$v])){
+					$current_stock += $current_sale_quantities[$v];
+				}
+				
+				if($requested_qty > $current_stock){
+					$resp['status'] = 'failed';
+					$resp['msg'] = "Insufficient stock for item ID {$v}. Available: {$current_stock}, Requested: {$requested_qty}";
+					return json_encode($resp);
+				}
+			}
+		}
+		
 		$data = "";
 		foreach($_POST as $k =>$v){
 			if(!in_array($k,array('id')) && !is_array($_POST[$k])){
@@ -598,6 +636,110 @@ Class Master extends DBConnection {
 		return json_encode($resp);
 
 	}
+
+	function get_current_stock($item_id){
+		$sql = "SELECT 
+					COALESCE(SUM(CASE WHEN type = 1 THEN quantity ELSE 0 END), 0) - 
+					COALESCE(SUM(CASE WHEN type = 2 THEN quantity ELSE 0 END), 0) as current_stock
+				FROM stock_list 
+				WHERE item_id = '{$item_id}'";
+		$result = $this->conn->query($sql);
+		if($result->num_rows > 0){
+			return $result->fetch_array()['current_stock'];
+		}
+		return 0;
+	}
+
+	function get_current_stock_api(){
+		extract($_POST);
+		$current_stock = $this->get_current_stock($item_id);
+		$resp['status'] = 'success';
+		$resp['current_stock'] = $current_stock;
+		return json_encode($resp);
+	}
+
+	function get_sales_report(){
+		extract($_POST);
+		
+		$where_conditions = array();
+		$params = array();
+		
+		if(!empty($date_from)) {
+			$where_conditions[] = "DATE(date_created) >= ?";
+			$params[] = $date_from;
+		}
+		
+		if(!empty($date_to)) {
+			$where_conditions[] = "DATE(date_created) <= ?";
+			$params[] = $date_to;
+		}
+		
+		if(!empty($client)) {
+			$where_conditions[] = "client = ?";
+			$params[] = $client;
+		}
+		
+		$where_clause = "";
+		if(!empty($where_conditions)) {
+			$where_clause = "WHERE " . implode(" AND ", $where_conditions);
+		}
+		
+		$sql = "SELECT * FROM sales_list {$where_clause} ORDER BY date_created DESC";
+		
+		// Prepare and execute query
+		$stmt = $this->conn->prepare($sql);
+		if(!empty($params)) {
+			$types = str_repeat('s', count($params));
+			$stmt->bind_param($types, ...$params);
+		}
+		$stmt->execute();
+		$result = $stmt->get_result();
+		
+		$data = array();
+		while($row = $result->fetch_assoc()) {
+			$data[] = $row;
+		}
+		
+		// Calculate summary
+		$summary_sql = "SELECT 
+			COUNT(*) as total_sales,
+			SUM(amount) as total_amount,
+			AVG(amount) as avg_amount
+			FROM sales_list {$where_clause}";
+		
+		$stmt = $this->conn->prepare($summary_sql);
+		if(!empty($params)) {
+			$types = str_repeat('s', count($params));
+			$stmt->bind_param($types, ...$params);
+		}
+		$stmt->execute();
+		$summary_result = $stmt->get_result();
+		$summary = $summary_result->fetch_assoc();
+		
+		// Get top client
+		$top_client_sql = "SELECT client, SUM(amount) as total_spent 
+			FROM sales_list {$where_clause} 
+			GROUP BY client 
+			ORDER BY total_spent DESC 
+			LIMIT 1";
+		
+		$stmt = $this->conn->prepare($top_client_sql);
+		if(!empty($params)) {
+			$types = str_repeat('s', count($params));
+			$stmt->bind_param($types, ...$params);
+		}
+		$stmt->execute();
+		$top_client_result = $stmt->get_result();
+		$top_client = $top_client_result->fetch_assoc();
+		
+		$summary['top_client'] = $top_client ? $top_client['client'] : null;
+		
+		$resp['status'] = 'success';
+		$resp['data'] = $data;
+		$resp['summary'] = $summary;
+		
+		return json_encode($resp);
+	}
 }
 
 $Master = new Master();
@@ -618,6 +760,12 @@ switch ($action) {
 	break;
 	case 'get_item':
 		echo $Master->get_item();
+	break;
+	case 'get_current_stock':
+		echo $Master->get_current_stock_api();
+	break;
+	case 'get_sales_report':
+		echo $Master->get_sales_report();
 	break;
 	case 'save_po':
 		echo $Master->save_po();
