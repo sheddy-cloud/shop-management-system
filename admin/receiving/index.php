@@ -32,9 +32,11 @@
                         while($row = $qry->fetch_assoc()):
                             $row['items'] = explode(',',$row['stock_ids']);
                             if($row['from_order'] == 1){
-                                $code = $conn->query("SELECT po_code from `purchase_order_list` where id='{$row['form_id']}' ")->fetch_assoc()['po_code'];
+                                $po_result = $conn->query("SELECT po_code from `purchase_order_list` where id='{$row['form_id']}' ")->fetch_assoc();
+                                $code = $po_result ? $po_result['po_code'] : 'N/A';
                             }else{
-                                $code = $conn->query("SELECT bo_code from `back_order_list` where id='{$row['form_id']}' ")->fetch_assoc()['bo_code'];
+                                $bo_result = $conn->query("SELECT bo_code from `back_order_list` where id='{$row['form_id']}' ")->fetch_assoc();
+                                $code = $bo_result ? $bo_result['bo_code'] : 'N/A';
                             }
                         ?>
                             <tr>

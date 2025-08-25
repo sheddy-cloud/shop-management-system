@@ -1,149 +1,154 @@
 </style>
 <!-- Main Sidebar Container -->
-      <aside class="main-sidebar sidebar-dark-primary elevation-4 sidebar-no-expand">
+<aside class="sidebar">
         <!-- Brand Logo -->
-        <a href="<?php echo base_url ?>admin" class="brand-link bg-primary text-sm">
-        <img src="<?php echo validate_image($_settings->info('logo'))?>" alt="Store Logo" class="brand-image img-circle elevation-3 bg-black" style="width: 1.8rem;height: 1.8rem;max-height: unset">
-        <span class="brand-text font-weight-light"><?php echo $_settings->info('short_name') ?></span>
-        </a>
-        <!-- Sidebar -->
-        <div class="sidebar os-host os-theme-light os-host-overflow os-host-overflow-y os-host-resize-disabled os-host-transition os-host-scrollbar-horizontal-hidden">
-          <div class="os-resize-observer-host observed">
-            <div class="os-resize-observer" style="left: 0px; right: auto;"></div>
+  <div class="sidebar-header p-3 border-bottom">
+    <a href="<?php echo base_url ?>admin" class="d-flex align-items-center text-decoration-none">
+      <img src="<?php echo validate_image($_settings->info('logo'))?>" alt="Store Logo" class="rounded-circle me-2" style="width: 2rem; height: 2rem;">
+      <span class="fw-bold text-primary"><?php echo $_settings->info('short_name') ?></span>
+    </a>
           </div>
-          <div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;">
-            <div class="os-resize-observer"></div>
-          </div>
-          <div class="os-content-glue" style="margin: 0px -8px; width: 249px; height: 646px;"></div>
-          <div class="os-padding">
-            <div class="os-viewport os-viewport-native-scrollbars-invisible" style="overflow-y: scroll;">
-              <div class="os-content" style="padding: 0px 8px; height: 100%; width: 100%;">
-                <!-- Sidebar user panel (optional) -->
-                <div class="clearfix"></div>
+  
                 <!-- Sidebar Menu -->
-                <nav class="mt-4">
-                   <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-compact nav-flat nav-child-indent nav-collapse-hide-child" data-widget="treeview" role="menu" data-accordion="false">
-                    <li class="nav-item dropdown">
-                      <a href="./" class="nav-link nav-home">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                          Dashboard
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="<?php echo base_url ?>admin/?page=purchase_order" class="nav-link nav-purchase_order">
-                        <i class="nav-icon fas fa-th-list"></i>
-                        <p>
-                          Purchase Order
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="<?php echo base_url ?>admin/?page=receiving" class="nav-link nav-receiving">
-                        <i class="nav-icon fas fa-boxes"></i>
-                        <p>
-                          Receiving
-                        </p>
-                      </a>
-                    </li>
-                    <!-- <li class="nav-item">
-                      <a href="<?php echo base_url ?>admin/?page=back_order" class="nav-link nav-back_order">
-                        <i class="nav-icon fas fa-exchange-alt"></i>
-                        <p>
-                          Back Order
-                        </p>
-                      </a>
-                    </li> -->
-                    <li class="nav-item">
-                      <a href="<?php echo base_url ?>admin/?page=return" class="nav-link nav-return">
-                        <i class="nav-icon fas fa-undo"></i>
-                        <p>
-                          Return List
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="<?php echo base_url ?>admin/?page=stocks" class="nav-link nav-stocks">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                          Stocks
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="<?php echo base_url ?>admin/?page=sales" class="nav-link nav-sales">
-                        <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                        <p>
-                          Sale List
-                        </p>
-                      </a>
-                    </li>
+  <div class="sidebar-body p-3">
+    <nav class="nav flex-column">
+      
+      <!-- Dashboard -->
+      <div class="nav-item mb-2">
+        <a href="./" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'home' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-tachometer-alt me-2"></i>
+          <span>Dashboard</span>
+        </a>
+      </div>
+
+      <!-- Operations Section -->
+      <div class="nav-header text-uppercase fw-bold text-muted small mt-4 mb-2">
+        <i class="fas fa-cogs me-2"></i>Operations
+      </div>
+
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/?page=purchase_order" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'purchase_order' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-th-list me-2"></i>
+          <span>Purchase Order</span>
+        </a>
+      </div>
+
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/?page=receiving" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'receiving' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-boxes me-2"></i>
+          <span>Receiving</span>
+        </a>
+      </div>
+
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/?page=return" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'return' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-undo me-2"></i>
+          <span>Return List</span>
+        </a>
+      </div>
+
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/?page=stocks" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'stocks' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-table me-2"></i>
+          <span>Stocks</span>
+        </a>
+      </div>
+
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/?page=sales" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'sales' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-file-invoice-dollar me-2"></i>
+          <span>Sale List</span>
+        </a>
+      </div>
+
                     <?php if($_settings->userdata('type') == 1): ?>
-                    <li class="nav-header">Maintenance</li>
-                    <li class="nav-item dropdown">
-                      <a href="<?php echo base_url ?>admin/?page=maintenance/supplier" class="nav-link nav-maintenance_supplier">
-                        <i class="nav-icon fas fa-truck-loading"></i>
-                        <p>
-                          Supplier List
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a href="<?php echo base_url ?>admin/?page=maintenance/item" class="nav-link nav-maintenance_item">
-                        <i class="nav-icon fas fa-boxes"></i>
-                        <p>
-                          Item List
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a href="<?php echo base_url ?>admin/?page=user/list" class="nav-link nav-user_list">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                          User List
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a href="<?php echo base_url ?>admin/?page=user/logs" class="nav-link nav-user_listi">
-                        <i class="nav-icon fas fa-undo"></i>
-                        <p>
-                          UserLogs
-                        </p>
-                      </a>
-                    </li>
+      <!-- Maintenance Section -->
+      <div class="nav-header text-uppercase fw-bold text-muted small mt-4 mb-2">
+        <i class="fas fa-tools me-2"></i>Maintenance
+      </div>
 
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/?page=maintenance/supplier" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'maintenance/supplier' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-truck-loading me-2"></i>
+          <span>Supplier List</span>
+        </a>
+      </div>
 
-                    <li class="nav-item dropdown">
-                      <a href="<?php echo base_url ?>admin/?page=system_info" class="nav-link nav-system_info">
-                        <i class="nav-icon fas fa-cogs"></i>
-                        <p>
-                          Settings
-                        </p>
-                      </a>
-                    </li>
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/?page=maintenance/item" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'maintenance/item' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-boxes me-2"></i>
+          <span>Item List</span>
+        </a>
+      </div>
+
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/?page=maintenance/client" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'maintenance/client' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-users me-2"></i>
+          <span>Client List</span>
+        </a>
+      </div>
+
+      <!-- System Section -->
+      <div class="nav-header text-uppercase fw-bold text-muted small mt-4 mb-2">
+        <i class="fas fa-cog me-2"></i>System
+      </div>
+
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/?page=user" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'user' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-user-shield me-2"></i>
+          <span>User List</span>
+        </a>
+      </div>
+
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/?page=system_info" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'system_info' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-info-circle me-2"></i>
+          <span>System Info</span>
+        </a>
+      </div>
+
                     <?php endif; ?>
 
-                  </ul>
-                </nav>
-                <!-- /.sidebar-menu -->
+      <!-- Reports Section -->
+      <div class="nav-header text-uppercase fw-bold text-muted small mt-4 mb-2">
+        <i class="fas fa-chart-bar me-2"></i>Reports
               </div>
+
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/?page=reports/sales" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'reports/sales' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-chart-line me-2"></i>
+          <span>Sales Report</span>
+        </a>
             </div>
+
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/?page=reports/inventory" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'reports/inventory' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-chart-pie me-2"></i>
+          <span>Inventory Report</span>
+        </a>
           </div>
-          <div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden">
-            <div class="os-scrollbar-track">
-              <div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px, 0px);"></div>
+
+      <!-- Account Section -->
+      <div class="nav-header text-uppercase fw-bold text-muted small mt-4 mb-2">
+        <i class="fas fa-user me-2"></i>Account
             </div>
+
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/?page=profile" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 <?php echo $page == 'profile' ? 'bg-primary text-white' : 'text-dark' ?>">
+          <i class="fas fa-user-circle me-2"></i>
+          <span>My Profile</span>
+        </a>
           </div>
-          <div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden">
-            <div class="os-scrollbar-track">
-              <div class="os-scrollbar-handle" style="height: 55.017%; transform: translate(0px, 0px);"></div>
+
+      <div class="nav-item mb-1">
+        <a href="<?php echo base_url ?>admin/logout.php" class="nav-link d-flex align-items-center text-decoration-none rounded p-2 text-danger">
+          <i class="fas fa-sign-out-alt me-2"></i>
+          <span>Logout</span>
+        </a>
             </div>
-          </div>
-          <div class="os-scrollbar-corner"></div>
+
+    </nav>
         </div>
-        <!-- /.sidebar -->
       </aside>
       <script>
         var page;
