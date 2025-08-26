@@ -108,6 +108,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             justify-content: center;
             position: relative;
             overflow: hidden;
+            padding: 20px 0;
         }
         
         body::before {
@@ -144,6 +145,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 3rem;
             width: 100%;
             max-width: 600px;
+            max-height: 95vh;
+            overflow-y: auto;
             position: relative;
             z-index: 3;
         }
@@ -154,10 +157,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 max-width: 90%;
                 padding: 2rem;
                 margin: 20px;
+                max-height: 90vh;
+                overflow-y: auto;
             }
             
             body {
-                padding: 10px;
+                padding: 20px 10px;
+                align-items: flex-start;
             }
         }
         
@@ -166,10 +172,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 max-width: 95%;
                 padding: 1.5rem;
                 margin: 10px;
+                max-height: 85vh;
+                overflow-y: auto;
             }
             
             body {
-                padding: 5px;
+                padding: 15px 5px;
+                align-items: flex-start;
             }
         }
         

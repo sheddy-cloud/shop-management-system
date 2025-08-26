@@ -6,10 +6,16 @@ if (!isset($page)) {
 ?>
 <!-- Brand Logo -->
 <div class="sidebar-header p-3 border-bottom">
-    <a href="<?php echo base_url ?>shop" class="d-flex align-items-center text-decoration-none">
-        <img src="<?php echo validate_image($_settings->info('logo'))?>" alt="Store Logo" class="rounded-circle me-2" style="width: 2rem; height: 2rem;">
-        <span class="fw-bold text-primary"><?php echo $_settings->info('short_name') ?></span>
-    </a>
+    <div class="d-flex align-items-center justify-content-between">
+        <a href="<?php echo base_url ?>shop" class="d-flex align-items-center text-decoration-none">
+            <img src="<?php echo validate_image($_settings->info('logo'))?>" alt="Store Logo" class="rounded-circle me-2" style="width: 2rem; height: 2rem;">
+            <span class="fw-bold text-primary"><?php echo $_settings->info('short_name') ?></span>
+        </a>
+        <!-- Mobile Close Button -->
+        <button class="sidebar-close-btn d-lg-none" id="sidebarCloseBtn" type="button">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
 </div>
 
 <!-- Sidebar Menu -->
