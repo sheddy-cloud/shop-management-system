@@ -262,7 +262,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <i class="fas fa-user-plus me-2"></i>
                 Create Account
             </h1>
-            <p>Join our Stock Management System</p>
+            <p>Join our Shop Management System</p>
         </div>
         
         <?php if($error): ?>
