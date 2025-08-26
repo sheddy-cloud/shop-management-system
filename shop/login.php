@@ -68,6 +68,31 @@
             z-index: 3;
         }
         
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 768px) {
+            .login-container {
+                max-width: 90%;
+                padding: 2rem;
+                margin: 20px;
+            }
+            
+            body {
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .login-container {
+                max-width: 95%;
+                padding: 1.5rem;
+                margin: 10px;
+            }
+            
+            body {
+                padding: 5px;
+            }
+        }
+        
         .login-header {
             text-align: center;
             margin-bottom: 2rem;

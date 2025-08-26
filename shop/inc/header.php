@@ -370,23 +370,26 @@
             color: white !important;
         }
         
-        /* Responsive Design */
+                /* Responsive Design */
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
                 left: 0;
                 top: 0;
                 height: 100vh;
-                width: 260px;
-                border-radius: 20px 0 0 20px;
+                width: 50vw;
+                max-width: 300px;
+                min-width: 250px;
+                border-radius: 0 20px 20px 0;
                 z-index: 1003;
                 position: fixed;
+                box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
             }
             
-                    .sidebar.show {
-            transform: translateX(0) !important;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-        }
+            .sidebar.show {
+                transform: translateX(0) !important;
+                box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+            }
         
         /* Mobile overlay for sidebar */
         .sidebar-overlay {
@@ -395,11 +398,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 1002;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
+            backdrop-filter: blur(2px);
         }
         
         .sidebar-overlay.show {
@@ -448,6 +452,8 @@
             .content-area {
                 margin-left: 0 !important;
                 padding: 15px;
+                width: 100%;
+                position: relative;
             }
             
             .content-area.expanded {
@@ -513,14 +519,18 @@
                 left: 0;
                 top: 0;
                 height: 100vh;
-                width: 250px;
-                border-radius: 20px 0 0 20px;
+                width: 60vw;
+                max-width: 280px;
+                min-width: 240px;
+                border-radius: 0 20px 20px 0;
                 position: fixed;
             }
             
             .content-area {
                 margin-left: 0 !important;
                 padding: 10px;
+                width: 100%;
+                position: relative;
             }
             
             .content-area.expanded {
@@ -559,7 +569,9 @@
         
         @media (max-width: 480px) {
             .sidebar {
-                width: 240px;
+                width: 70vw;
+                max-width: 260px;
+                min-width: 220px;
                 left: 0;
                 top: 0;
                 height: 100vh;
