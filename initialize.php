@@ -1,6 +1,6 @@
 <?php
-// Production Server Configuration
-if(!defined('base_url')) define('base_url','http://13.60.250.20/sms/');
+// Local Development Configuration
+if(!defined('base_url')) define('base_url','http://localhost/sms/');
 if(!defined('base_app')) define('base_app', str_replace('\\','/',__DIR__).'/' );
 
 // Database Configuration

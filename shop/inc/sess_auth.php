@@ -24,8 +24,9 @@ if(!isset($_SESSION['userdata']) && !strpos($link, 'login.php') && !strpos($link
 if(isset($_SESSION['userdata']) && strpos($link, 'login.php')){
 	redirect('shop/index.php');
 }
-$module = array('','admin','faculty','student');
-if(isset($_SESSION['userdata']) && (strpos($link, 'index.php') || strpos($link, 'shop/')) && $_SESSION['userdata']['login_type'] !=  1){
-	echo "<script>alert('Access Denied!');location.replace('".base_url.$module[$_SESSION['userdata']['login_type']]."');</script>";
+// Allow both Shop Owners (type 1) and Staff (type 2) to access the shop
+// Only block access if user type is not 1 or 2
+if(isset($_SESSION['userdata']) && (strpos($link, 'index.php') || strpos($link, 'shop/')) && !in_array($_SESSION['userdata']['login_type'], [1, 2])){
+	echo "<script>alert('Access Denied!');location.replace('".base_url."');</script>";
     exit;
 }

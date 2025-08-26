@@ -23,12 +23,14 @@ class Login extends DBConnection {
 		$qry = $this->conn->query("SELECT * FROM users WHERE username = '$username' AND password = MD5('$password')");
 		if ($qry->num_rows > 0) {
 			// User exists, retrieve user data
-			foreach ($qry->fetch_array() as $k => $v) {
+			$user_data = $qry->fetch_array();
+			foreach ($user_data as $k => $v) {
 				if (!is_numeric($k) && $k != 'password') {
 					$this->settings->set_userdata($k, $v);
 				}
 			}
-			$this->settings->set_userdata('login_type', 1);
+			// Set login_type to the actual user type from database
+			$this->settings->set_userdata('login_type', $user_data['type']);
 	
 			return json_encode(array('status' => 'success'));
 		} else {
