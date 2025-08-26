@@ -18,10 +18,42 @@
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-image: url('../image.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(102, 126, 234, 0.85) 0%, 
+                rgba(118, 75, 162, 0.85) 50%,
+                rgba(0, 0, 0, 0.7) 100%);
+            z-index: 1;
+        }
+        
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+            z-index: 2;
         }
         
         .login-container {
@@ -32,6 +64,8 @@
             padding: 3rem;
             width: 100%;
             max-width: 400px;
+            position: relative;
+            z-index: 3;
         }
         
         .login-header {
@@ -90,20 +124,7 @@
             box-shadow: 0 10px 25px rgba(13, 110, 253, 0.3);
         }
         
-        .signup-link {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-        
-        .signup-link a {
-            color: #0d6efd;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .signup-link a:hover {
-            text-decoration: underline;
-        }
+
         
         .alert {
             border-radius: 10px;
@@ -179,9 +200,12 @@
         </div>
       </form>
         
-        <div class="signup-link">
-            <p class="mb-0">Don't have an account? <a href="signup.php">Sign Up</a></p>
-  </div>
+        <div class="login-link">
+            Don't have an account? 
+            <a href="signup.php">
+                <i class="fas fa-sign-in-alt me-1"></i>register here
+            </a>
+        </div>
 </div>
 
 <!-- jQuery -->

@@ -95,7 +95,7 @@
             <img src="<?php echo base_url ?>dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             <div class="user-info">
               <a href="#" class="d-block"><?php echo $_SESSION['userdata']['firstname'] . ' ' . $_SESSION['userdata']['lastname'] ?></a>
-              <small><?php echo $_SESSION['userdata']['type'] == 1 ? 'Administrator' : 'Staff' ?></small>
+              <small><?php echo $_SESSION['userdata']['type'] == 1 ? 'Shop Owner' : 'Staff' ?></small>
             </div>
           </li>
           <!-- Menu Footer-->

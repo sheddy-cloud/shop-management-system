@@ -231,11 +231,19 @@ Class Users extends DBConnection {
 		if(!empty($data)) $data .=" , ";
 		$data .= " `type` = 2 ";
 		
+		// Handle avatar upload
+		if(isset($_FILES['img']) && $_FILES['img']['tmp_name'] != ''){
+			$fname = 'uploads/'.strtotime(date('y-m-d H:i')).'_'.$_FILES['img']['name'];
+			$move = move_uploaded_file($_FILES['img']['tmp_name'],'../'. $fname);
+			if($move){
+				$data .=" , avatar = '{$fname}' ";
+			}
+		}
+		
 		// Insert new user
 		$qry = $this->conn->query("INSERT INTO users set {$data}");
 		if($qry){
-			$this->settings->set_flashdata('success','Account created successfully! Please login.');
-			return 1;
+			return 1; // Success
 		}else{
 			return 2; // Database error
 		}

@@ -20,6 +20,14 @@
 			<a href="?page=user/manage_user" class="btn btn-flat btn-primary"><span class="fas fa-plus"></span>  Create New</a>
 		</div>
 	</div>
+	<?php if($_SESSION['userdata']['type'] == 1): ?>
+	<div class="card-body">
+		<div class="alert alert-info">
+			<i class="fas fa-info-circle me-2"></i>
+			<strong>Note:</strong> As a Shop Owner, you can create and edit users but cannot delete them.
+		</div>
+	</div>
+	<?php endif; ?>
 	<div class="card-body">
 		<div class="container-fluid">
         <div class="container-fluid">
@@ -54,7 +62,7 @@
 							<td class="text-center"><img src="<?php echo validate_image($row['avatar']) ?>" class="img-avatar img-thumbnail p-0 border-2" alt="user_avatar"></td>
 							<td><?php echo ucwords($row['name']) ?></td>
 							<td ><p class="m-0 truncate-1"><?php echo $row['username'] ?></p></td>
-							<td ><p class="m-0"><?php echo ($row['type'] == 1 )? "Adminstrator" : "Staff" ?></p></td>
+							<td ><p class="m-0"><?php echo ($row['type'] == 1 )? "Shop Owner" : "Staff" ?></p></td>
 														<td align="center">
 								<div class="dropdown">
 									<button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-bs-toggle="dropdown">
@@ -63,8 +71,10 @@
 									</button>
 									<ul class="dropdown-menu" role="menu">
 										<li><a class="dropdown-item" href="?page=user/manage_user&id=<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a></li>
+										<?php if($_SESSION['userdata']['type'] != 1): ?>
 										<li><hr class="dropdown-divider"></li>
 										<li><a class="dropdown-item delete_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-trash text-danger"></span> Delete</a></li>
+										<?php endif; ?>
 									</ul>
 								</div>
 							</td>
@@ -99,6 +109,9 @@
 			success:function(resp){
 				if(typeof resp== 'object' && resp.status == 'success'){
 					location.reload();
+				}else if(typeof resp== 'object' && resp.status == 'failed'){
+					alert_toast(resp.message || "An error occurred.",'error');
+					end_loader();
 				}else{
 					//alert_toast("refresh page.",'');
 					end_loader();

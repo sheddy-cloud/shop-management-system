@@ -129,16 +129,17 @@
         }
         
         .sidebar-toggle {
-            position: absolute;
+            position: fixed;
             top: 20px;
             left: 20px;
-            z-index: 1001;
+            z-index: 1004;
             background: rgba(255, 255, 255, 0.95);
             border: none;
             border-radius: 10px;
-            padding: 10px;
+            padding: 12px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
         
         .sidebar-toggle:hover {
@@ -375,15 +376,60 @@
                 transform: translateX(-100%);
                 left: 0;
                 top: 0;
-                height: 100%;
+                height: 100vh;
                 width: 260px;
                 border-radius: 20px 0 0 20px;
                 z-index: 1003;
+                position: fixed;
             }
             
-            .sidebar.show {
-                transform: translateX(0) !important;
+                    .sidebar.show {
+            transform: translateX(0) !important;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Mobile overlay for sidebar */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1002;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Mobile-specific sidebar improvements */
+        @media (max-width: 768px) {
+            .sidebar {
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             }
+            
+            .sidebar-body {
+                padding: 20px 15px !important;
+            }
+            
+            .nav-link {
+                padding: 15px 20px !important;
+                margin: 5px 0;
+                font-size: 1rem;
+                border-radius: 12px;
+            }
+            
+            .nav-header {
+                margin-top: 20px;
+                margin-bottom: 10px;
+                padding: 0 20px;
+            }
+        }
             
             .sidebar-body {
                 max-height: calc(100% - 70px);
@@ -416,6 +462,8 @@
                 top: 15px;
                 left: 15px;
                 display: block !important;
+                position: fixed !important;
+                z-index: 1004 !important;
             }
             
             /* Mobile table improvements */
@@ -464,9 +512,10 @@
             .sidebar {
                 left: 0;
                 top: 0;
-                height: 100%;
+                height: 100vh;
                 width: 250px;
                 border-radius: 20px 0 0 20px;
+                position: fixed;
             }
             
             .content-area {
@@ -485,7 +534,9 @@
             .sidebar-toggle {
                 top: 10px;
                 left: 10px;
-                padding: 8px;
+                padding: 10px;
+                position: fixed !important;
+                z-index: 1004 !important;
             }
             
             .table-responsive {
@@ -511,13 +562,16 @@
                 width: 240px;
                 left: 0;
                 top: 0;
-                height: 100%;
+                height: 100vh;
+                position: fixed;
             }
             
             .sidebar-toggle {
                 top: 8px;
                 left: 8px;
-                padding: 6px;
+                padding: 8px;
+                position: fixed !important;
+                z-index: 1004 !important;
             }
             
             .content-area {
@@ -593,6 +647,15 @@
             const sidebar = document.getElementById('sidebar');
             const contentArea = document.querySelector('.content-area');
             
+            // Create overlay for mobile sidebar
+            let overlay = document.getElementById('sidebarOverlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'sidebarOverlay';
+                overlay.className = 'sidebar-overlay';
+                document.body.appendChild(overlay);
+            }
+            
             // Function to update toggle button icon
             function updateToggleIcon() {
                 const icon = sidebarToggle.querySelector('i');
@@ -618,6 +681,14 @@
                 if (window.innerWidth <= 768) {
                     // Mobile behavior
                     sidebar.classList.toggle('show');
+                    overlay.classList.toggle('show');
+                    
+                    // Prevent body scroll when sidebar is open
+                    if (sidebar.classList.contains('show')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = '';
+                    }
                 } else {
                     // Desktop behavior
                     sidebar.classList.toggle('collapsed');
@@ -641,6 +712,18 @@
                     !sidebarToggle.contains(e.target) &&
                     sidebar.classList.contains('show')) {
                     sidebar.classList.remove('show');
+                    overlay.classList.remove('show');
+                    document.body.style.overflow = '';
+                    updateToggleIcon();
+                }
+            });
+            
+            // Close sidebar when clicking on overlay
+            overlay.addEventListener('click', function() {
+                if (window.innerWidth <= 768 && sidebar.classList.contains('show')) {
+                    sidebar.classList.remove('show');
+                    overlay.classList.remove('show');
+                    document.body.style.overflow = '';
                     updateToggleIcon();
                 }
             });
@@ -650,6 +733,8 @@
                 if (window.innerWidth > 768) {
                     // Desktop: remove mobile classes
                     sidebar.classList.remove('show');
+                    overlay.classList.remove('show');
+                    document.body.style.overflow = '';
                     if (!sidebar.classList.contains('collapsed')) {
                         contentArea.classList.remove('expanded');
                     }
@@ -658,6 +743,8 @@
                     sidebar.classList.remove('collapsed');
                     contentArea.classList.remove('expanded');
                     sidebar.classList.remove('show');
+                    overlay.classList.remove('show');
+                    document.body.style.overflow = '';
                 }
                 
                 // Update toggle button icon after resize
@@ -739,6 +826,8 @@
                 sidebar.classList.remove('collapsed');
                 contentArea.classList.remove('expanded');
                 sidebar.classList.remove('show');
+                overlay.classList.remove('show');
+                document.body.style.overflow = '';
             }
             
             // Initialize toggle button icon

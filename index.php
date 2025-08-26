@@ -387,7 +387,7 @@ require_once('config.php');
                                 <i class="fas fa-sign-in-alt"></i>
                                 Login
                             </a>
-                            <a href="shop/signup.php" class="btn-hero btn-secondary-hero">
+                            <a href="shop/signup.php" class="btn-hero btn-primary-hero">
                                 <i class="fas fa-user-plus"></i>
                                 Sign Up
                             </a>

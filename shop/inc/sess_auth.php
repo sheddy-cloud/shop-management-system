@@ -21,7 +21,7 @@ $link .= $_SERVER['REQUEST_URI'];
 if(!isset($_SESSION['userdata']) && !strpos($link, 'login.php') && !strpos($link, 'signup.php')){
 	redirect('shop/login.php');
 }
-if(isset($_SESSION['userdata']) && (strpos($link, 'login.php') || strpos($link, 'signup.php'))){
+if(isset($_SESSION['userdata']) && strpos($link, 'login.php')){
 	redirect('shop/index.php');
 }
 $module = array('','admin','faculty','student');
