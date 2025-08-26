@@ -1,12 +1,12 @@
 <?php
-// Local Development Configuration
-if(!defined('base_url')) define('base_url','http://localhost/sms/');
+// Production Server Configuration
+if(!defined('base_url')) define('base_url','http://13.60.250.20/sms/');
 if(!defined('base_app')) define('base_app', str_replace('\\','/',__DIR__).'/' );
 
 // Database Configuration
 if(!defined('DB_SERVER')) define('DB_SERVER',"localhost");
-if(!defined('DB_USERNAME')) define('DB_USERNAME',"root");
-if(!defined('DB_PASSWORD')) define('DB_PASSWORD',"");
+if(!defined('DB_USERNAME')) define('DB_USERNAME',"SHEDRACK");
+if(!defined('DB_PASSWORD')) define('DB_PASSWORD',"SHEDRACKs.677");
 if(!defined('DB_NAME')) define('DB_NAME',"sms_db");
 
 // Additional Configuration Constants
