@@ -23,11 +23,11 @@ RewriteEngine On
     Deny from all
 </FilesMatch>
 
-# Prevent access to test files in production
-<FilesMatch "^(test_|debug_)">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
+# Allow access to test files in development
+# <FilesMatch "^(test_|debug_)">
+#     Order allow,deny
+#     Deny from all
+# </FilesMatch>
 
 # Enable compression
 <IfModule mod_deflate.c>
